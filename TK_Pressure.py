@@ -167,7 +167,7 @@ try:
             #ax2.relim()  # Rescale data limit for second line
             #ax2.autoscale_view()  # Rescale view limit for second line
            
-            ax.set_ylim(980, 1020)
+            ax.set_ylim(960, 1020)
             #plt.ylim(970,1030)
             plt.xlabel("Uhrzeit", fontsize=10, color="#000000")
             
@@ -181,9 +181,11 @@ try:
             t_end = time.time()
             error = "/home/pi/data/error.log"
             f = open(error,  "a")
-            f.write("loops: " + str(b) + " errors: " + str(c) + '\n')
+            f.write("Pressure-loops: " + str(b) + " errors: " + str(c) + '\n')
             f.close()
-        print(b,c)           
+        #print(b,c)
+        #print(max(y1),max(y2), max(y3), max(y4), max(y5))
+        #print(np.mean(y1),np.mean(y2), np.mean(y3), np.mean(y4), np.mean(y5))
             
             
 

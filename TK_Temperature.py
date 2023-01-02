@@ -32,11 +32,11 @@ def extr():
     d.read()
     d.close
     x=np.genfromtxt(Dateiname,skip_header=1,usecols=(6),delimiter=",")
-    y1=np.genfromtxt(Dateiname,skip_header=1,usecols=(7),delimiter=",")
-    y2=np.genfromtxt(Dateiname,skip_header=1,usecols=(8),delimiter=",")
-    y3=np.genfromtxt(Dateiname,skip_header=1,usecols=(9),delimiter=",")
-    y4=np.genfromtxt(Dateiname,skip_header=1,usecols=(10),delimiter=",")
-    y5=np.genfromtxt(Dateiname,skip_header=1,usecols=(11),delimiter=",")
+    y1=np.genfromtxt(Dateiname,skip_header=1,usecols=(1),delimiter=",")
+    y2=np.genfromtxt(Dateiname,skip_header=1,usecols=(2),delimiter=",")
+    y3=np.genfromtxt(Dateiname,skip_header=1,usecols=(3),delimiter=",")
+    y4=np.genfromtxt(Dateiname,skip_header=1,usecols=(4),delimiter=",")
+    y5=np.genfromtxt(Dateiname,skip_header=1,usecols=(5),delimiter=",")
     
 
     l = len(x)
@@ -65,14 +65,14 @@ def on_close(event):
 
 plt.ion() # Interactive mode otherwise plot won't update in real time
 fig = plt.figure(figsize=(7, 9))
-fig.canvas.manager.set_window_title("TK-Humidity")
+fig.canvas.manager.set_window_title("TK-Temperatur")
 #fig.canvas.manager.full_screen_toggle()
 fig.canvas.mpl_connect("close_event", on_close) # Connect the plot window close event to function on_close
 ax = fig.add_subplot(111)
 #ax2 = ax.twinx() # Get a second y axis
 
 (A0_line,) = ax.plot(x, y1, label="A0", color="#FFAB60", linestyle="--") ##FFAB60 is orange
-ax.set_ylabel("Humidity [%]", color="#000000")
+ax.set_ylabel("Temperatur [°C]", color="#000000")
 
 (A1_line,) = ax.plot(x, y2, label="A1", color="#00FF00", linestyle="--") #00FF00 is green
 #ax.set_ylabel("counts", color="#000000")
@@ -114,11 +114,11 @@ try:
             d.read()
             d.close
             x=np.genfromtxt(Dateiname,skip_header=1,usecols=(6),delimiter=",")
-            y1=np.genfromtxt(Dateiname,skip_header=1,usecols=(7),delimiter=",")
-            y2=np.genfromtxt(Dateiname,skip_header=1,usecols=(8),delimiter=",")
-            y3=np.genfromtxt(Dateiname,skip_header=1,usecols=(9),delimiter=",")
-            y4=np.genfromtxt(Dateiname,skip_header=1,usecols=(10),delimiter=",")
-            y5=np.genfromtxt(Dateiname,skip_header=1,usecols=(11),delimiter=",")
+            y1=np.genfromtxt(Dateiname,skip_header=1,usecols=(1),delimiter=",")
+            y2=np.genfromtxt(Dateiname,skip_header=1,usecols=(2),delimiter=",")
+            y3=np.genfromtxt(Dateiname,skip_header=1,usecols=(3),delimiter=",")
+            y4=np.genfromtxt(Dateiname,skip_header=1,usecols=(4),delimiter=",")
+            y5=np.genfromtxt(Dateiname,skip_header=1,usecols=(5),delimiter=",")
             
 
             l = len(x)
@@ -137,7 +137,7 @@ try:
             humidity4 = y4[l-1]
             humidity5 = y5[l-1]
             timestr = time.strftime("%Y.%m.%d %H:%M:%S")
-            plt.title(str(timestr) + "     S1: " + str(round((humidity1),0)) + "   S2: " +str(round((humidity2),0)) + "   S3: " + str(round((humidity3),0)) + "   S4: " + str(round((humidity4),0)) + "   S5: " + str(round((humidity5),0)),fontsize=10) # To display 0 initially. Will be updated 
+            plt.title(str(timestr) + "     S1: " + str(round((humidity1),2)) + "   S2: " +str(round((humidity2),2)) + "   S3: " + str(round((humidity3),2)) + "   S4: " + str(round((humidity4),2)) + "   S5: " + str(round((humidity5),2)),fontsize=10) # To display 0 initially. Will be updated 
                     
             x = list(t)
             y1 =list(y1)
@@ -163,13 +163,13 @@ try:
             #ax2.relim()  # Rescale data limit for second line
             #ax2.autoscale_view()  # Rescale view limit for second line
            
-            ax.set_ylim(30, 60)
+            ax.set_ylim(19.5, 20.5)
             #plt.ylim(970,1030)
             plt.xlabel("Uhrzeit", fontsize=10, color="#000000")
             
             fig.canvas.draw()
             fig.canvas.flush_events()
-            time.sleep(60)
+            time.sleep(6.0)
             b=b+1
         except:
             c=c+1
@@ -177,7 +177,7 @@ try:
             t_end = time.time()
             error = "/home/pi/data/error.log"
             f = open(error,  "a")
-            f.write("Humidity-loops: " + str(b) + " errors: " + str(c) + '\n')
+            f.write("Temperature-loops: " + str(b) + " errors: " + str(c) + '\n')
             f.close()
         #print(b,c)
         #print(max(y1),max(y2), max(y3), max(y4), max(y5))
@@ -192,3 +192,4 @@ except KeyboardInterrupt:
     GPIO.cleanup()
     print("\nBye")
     sys.exit()
+
